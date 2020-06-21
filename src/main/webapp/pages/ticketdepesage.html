@@ -1,0 +1,241 @@
+
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTD-SN</a>
+		</div>
+		<div class="navbar-wrapper">
+    <div class="container-fluid" style="height: 50px;">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#homeGPB" class=""><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
+                        <li class="active"><a><span class="glyphicon glyphicon-leaf"></span> Ticket de pesage</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                       
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+	</nav>
+		<form  name="form" ng-submit="submit()" novalidate novalidate>
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<h3 class = "text-primary"><span class="glyphicon glyphicon-leaf"></span>  Ticket de pesage
+			<button class = "btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#add_prefecture22"><span class = "glyphicon glyphicon-list"></span> Liste des Tickets de pesage</button>
+			</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info"><span class = "glyphicon glyphicon-screenshot"></span> Selectionner une Association Villageoise  </div>
+			<div class = "container-fluid">
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+	
+							<select class = "form-control" ng-model = "newTicket_de_pesage.client.code_client" required >
+								<option value = "">Choix AV</option>
+								<option ng-repeat= "client in clients" value = "{{client.code_client}}">{{client.nom_client}} | <B>canton:</B>{{client.canton.nom_canton}} | | CGI:{{client.cgi.nom_CGI}}</option>
+							</select>
+						</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>	
+	
+	
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<div class = "alert alert-info"><span class = "glyphicon glyphicon-screenshot"></span> Selectionner la vehicule</div>
+			<div class = "container-fluid">
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+	
+							<select class = "form-control" ng-model = "newTicket_de_pesage.vehicule.matricule" required >
+								<option value = "">Choix vehicule</option>
+								<option ng-repeat= "vehicule in vehicules" value = "{{vehicule.matricule}}">{{vehicule.matricule}}</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<div class = "alert alert-info"><span class = "glyphicon glyphicon-screenshot"></span> Selectionner le chauffeur</div>
+			<div class = "container-fluid">
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+	
+							<select class = "form-control" ng-model = "newTicket_de_pesage.chauffeur.code_chauffeur" required >
+								<option value = "">Choix chauffeur</option>
+								<option ng-repeat= "chauffeur in chauffeurs" value = "{{chauffeur.code_chauffeur}}">{{chauffeur.nom_chauffeur}}</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<div class = "alert alert-info"><span class="glyphicon glyphicon-leaf"></span> Coton pese</div>
+			<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Choix</th>
+							<th>Poids</th>
+							<th>libellé</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><select class = "form-control" ng-model = "newTicket_de_pesage.choix_coton" required>
+								<option value = "">Choix coton</option>
+								<option  value = "1">Premier choix</option>
+								<option  value = "2">Deuxieme choix</option>
+								<option  value = "3">Troisieme choix</option>
+							</select></td>
+							<td><input type  = "number" class = "form-control" ng-model = "newTicket_de_pesage.poids" required /></td>
+							<td><input type  = "text" class = "form-control" ng-model = "newTicket_de_pesage.libelle"  /></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Distance parcourue</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type  = "number" class = "form-control" ng-model = "newTicket_de_pesage.distance_parcourue" required /></td>
+							</tr>
+					</tbody>
+				</table>
+				<button  class="btn btn-primary" ng-click = "saveTicket_de_pesage()" ng-disabled="form.$invalid" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Enregistrer</button>
+			</div>
+		</div>
+		
+	</div></form>
+	
+	<div class="modal fade" id="add_prefecture22" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog col-sm-offset-0" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Liste des tickets de pesage</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<div class = "alert alert-info">Tickets de pesage </div>
+			<div class = "container-fluid">
+				<p align="right"><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText1"></label></p>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Date</th>
+							<th>Quantite du coton</th>
+							<th>Choix</th>
+							<th>Libelle</th>
+							<th>Chauffeur</th>
+							<th>Vehicule</th>
+							<th>Distance parcourue</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "ticket_de_pesage in ticket_de_pesages | filter:searchText1">
+							<td>{{ticket_de_pesage.code_tichet}}</td>
+							<td>{{ticket_de_pesage.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{ticket_de_pesage.poids}}</td>
+							<td>{{ticket_de_pesage.choix_coton}}</td>
+							<td>{{ticket_de_pesage.libelle}}</td>
+							<td>{{ticket_de_pesage.chauffeur.nom_chauffeur}}</td>
+							<td>{{ticket_de_pesage.vehicule.identite_interne}}</td>
+							<td>{{ticket_de_pesage.distance_parcourue}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefectur" ng-click = "selectTicket_de_pesage(ticket_de_pesage)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-edit"></span> Modifier</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	
+	
+	
+	
+				
+	</div>		</div>	
+				</div>
+				</form>
+			</div>
+		</div> </div>
+		<div class="modal fade" id="update_prefectur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+					<form  name="form1" ng-submit="submit()" novalidate novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Mettre a jour</h4>
+				</div>
+				<div class="modal-body">	
+						<div class="modal-body">	
+						
+						
+									<div class = "container-fluid">
+				<label>Ticket de pesage</label>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Choix</th>
+							<th>Poids</th>
+							<th>libelle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td><input type  = "number" class = "form-control" ng-model = "selectedTicket_de_pesage.poids" required/></td>
+							<td><input type  = "text" class = "form-control" ng-model = "selectedTicket_de_pesage.libelle" required/></td>
+						</tr>
+					</tbody>
+				</table>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Distance parcourue</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type  = "number" class = "form-control" ng-model = "selectedTicket_de_pesage.distance_parcourue" required/></td>
+							</tr>
+					</tbody>
+				</table>
+				</div>
+				</div>
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary"  data-dismiss = "modal" ng-click = "updateTicket()" ng-disabled="form1.$invalid" ><span class = "glyphicon glyphicon-trash"></span> Terminer</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	

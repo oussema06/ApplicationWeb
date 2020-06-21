@@ -1,0 +1,333 @@
+<html>
+ <head>
+    <script src="https://cdn.anychart.com/js/7.13.1/anychart-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.anychart.com/css/7.13.1/anychart-ui.min.css" />
+    <style>
+      html, body, #container {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+<body>
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTD-SN</a>
+		</div>
+		<div class="navbar-wrapper">
+    <div class="container-fluid" style="height: 50px;">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#homeSuperviseur_financier" class=""><span class="glyphicon glyphicon-home"></span> Acceuil</a></li>
+                        <li><a href="#ajout_bord_reg"><span class="glyphicon glyphicon-road"></span>  Ajouter bordereau de reglement</a></li>
+                        <li class="active"><a><span class="glyphicon glyphicon-list-alt"></span> Bordereau de reglement</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                       
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+	</nav>
+	</div></div></nav>
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<h3 class = "text-primary"><span class="glyphicon glyphicon-list-alt"></span> Bordereaux de reglement</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info"><span class="glyphicon glyphicon-remove"></span> Liste des bordereaux de reglement non reglé</div>
+			<div class = "container-fluid">
+	            <label>NB: Le total negative signifie que le client est crediteur au CTD-SN  </label>
+				<table class = "table table-bordered alert-warning" id="searchTextResults1">
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Type du client</th>
+							<th>Nom du client</th>
+							<th>Date</th>
+							<th>Total</th>
+							<th>Net a payer</th>
+							<th><label><span class="glyphicon glyphicon-search"></span> Rechercher: <input ng-model="searchText1"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "factureN in factureNs | filter:searchText1">
+							<td>{{factureN.num_facture}}</td>
+							<td>AV</td>
+							<td>{{factureN.client.nom_client}}</td>
+							<td>{{factureN.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{factureN.total}}</td>
+							<td>{{factureN.net}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture" ng-click = "selectFactureN(factureN)" class = "btn btn-success"><span class = "glyphicon glyphicon-euro"></span> Paiement</button>
+							|<button type = "button" data-toggle = "modal" data-target = "#update_prefecture1" ng-click = "selectFactureN(factureN)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher</button>  </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<div class = "alert alert-info"><span class="glyphicon glyphicon-ok"></span> Liste des bordereaux de réglement reglé</div>
+			<div class = "container-fluid">
+	
+				<table class = "table table-bordered alert-warning" id="searchTextResults">
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Type du client</th>
+							<th>Nom du client</th>
+							<th>Date</th>
+							<th>Total</th>
+							<th><label><span class="glyphicon glyphicon-search"></span> Rechercher: <input ng-model="searchText"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "factureP in facturePs | filter:searchText">
+							<td>{{factureP.num_facture}}</td>
+							<td>AV</td>
+							<td>{{factureP.client.nom_client}}</td>
+							<td>{{factureP.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<th>{{factureP.total}}</th>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture10" ng-click = "selectFactureP(factureP)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		
+	</div>	
+	<div class="modal fade" id="update_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form  name="form1" ng-submit="submit()" novalidate novalidate>
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Paiement</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Montant a payer</label>
+							<input type  = "number" class = "form-control" ng-model = "selectedFactureN.net" required/>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button  class="btn btn-success"  data-dismiss = "modal" ng-click = "updateFacture()" ng-disabled="form1.$invalid" ><span class = "glyphicon glyphicon-euro"></span> Payer</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="update_prefecture10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Details du bordereau de reglement</h4>
+				</div>
+				<div class="modal-body">
+				<label>Num : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureP.num_facture" disabled/></tr></table>
+				</div>
+				<div class="modal-body">
+				<label>Date : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureP.date|date:'yyyy-MM-dd HH:mm:ss'" disabled/></table>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Bordereaux de livraison :</label>
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date </th>
+							<th>Articles</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  ng-repeat = "bordereau_de_livraison in bordereau_de_livraisons" >
+							<td>{{bordereau_de_livraison.num}}</td>
+							<td>{{bordereau_de_livraison.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture2" ng-click = "selectSous_Prefecture(sous_prefecture)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="modal-body">
+				<label>Total des bordereaux de livraison : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureP.totalBord" disabled/></tr></table>
+				</div>
+						</div>
+				</div>
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Tickets de pesage :</label>
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date </th>
+							<th>Choix</th>
+							<th>Poids</th>
+							<th>Libelle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "ticket_de_pesage in ticket_de_pesages">
+							<td>{{ticket_de_pesage.code_tichet}}</td>
+							<td>{{ticket_de_pesage.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{ticket_de_pesage.choix_coton}}</td>
+							<td>{{ticket_de_pesage.poids}}</td>
+							<td>{{ticket_de_pesage.libelle}}</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				<div class="modal-body">
+				<label>Total des tickets de pesage : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureP.totalTicket" disabled/></tr></table>
+				</div>
+				<div class="modal-body">
+				<label>Credit des bordereaux de reglement des annees precedentes : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureP.totalFac" disabled/></tr></table>
+				</div>
+						</div>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		
+		  
+	</div>
+	
+	
+	<div class="modal fade" id="update_prefecture1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Details du bordereau de réglement</h4>
+				</div>
+				<div class="modal-body">
+				<label>Num : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureN.num_facture" disabled/></tr></table>
+				</div>
+				<div class="modal-body">
+				<label>Date : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureN.date" disabled/></table>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Bordereaux de livraison :</label>
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date </th>
+							<th>Articles</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr  ng-repeat = "bordereau_de_livraison in bordereau_de_livraisons" >
+							<td>{{bordereau_de_livraison.num}}</td>
+							<td>{{bordereau_de_livraison.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture2" ng-click = "selectBordereau_de_livraison(bordereau_de_livraison)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="modal-body">
+				<label>Total des bordereaux de livraison : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureN.totalBord" disabled/></tr></table>
+				</div>
+						</div>
+				</div>
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Tickets de pesage :</label>
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date </th>
+							<th>Choix</th>
+							<th>Poids</th>
+							<th>Libelle</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "ticket_de_pesage in ticket_de_pesages">
+							<td>{{ticket_de_pesage.code_tichet}}</td>
+							<td>{{ticket_de_pesage.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{ticket_de_pesage.choix_coton}}</td>
+							<td>{{ticket_de_pesage.poids}}</td>
+							<td>{{ticket_de_pesage.libelle}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="modal-body">
+				<label>Total des tickets de pesage : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureN.totalTicket" disabled/></tr></table>
+				</div>
+				<div class="modal-body">
+				<label>Credit des bordereaux de reglement des annees precedentes : </label>
+				<table class = "table table-bordered alert-warning"><tr><input type  = "text" class = "form-control" ng-model = "selectedFactureN.totalFac" disabled/></tr></table>
+				</div>
+						</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="modal fade" id="update_prefecture2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Liste des articles</h4>
+				</div>
+				<div class="modal-body">
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantite</th>
+							<th>Unite de ventes</th>
+							<th>Prix unitaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "liqne_bordereau in liqne_bordereaus">
+							<td>{{liqne_bordereau.article.nom}}</td>
+							<td>{{liqne_bordereau.article.discription_technique}}</td>
+							<td>{{liqne_bordereau.qauntite}}</td>
+							<td>{{liqne_bordereau.article.unite_de_vente}}</td>
+							<td>{{liqne_bordereau.article.prix_unitaire}}</td>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+	</div>
+	</body>
+	</html>
+
+	

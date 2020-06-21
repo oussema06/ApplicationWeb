@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+	
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTD-SN</a>
+		</div>
+		<div class="navbar-wrapper">
+    <div class="container-fluid" style="height: 50px;">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#homeSuperviseur_financier" class=""><span class="glyphicon glyphicon-home"></span> Acceuil</a></li>
+                        <li class="active"><a><span class="glyphicon glyphicon-road"></span>  ajouter bordereau de reglement</a></li>
+                        <li><a href="#bord_reg"><span class="glyphicon glyphicon-list-alt"></span> Bordereau de reglement</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                      
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+	</nav>
+	</div></div></nav>
+	<button class = "btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#add_prefecture9"><span class = "glyphicon glyphicon-euro"></span> Prix du coton</button>
+		
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<h3 class = "text-primary"><span class="glyphicon glyphicon-cog"></span> Ajouter un bordereau de reglement</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info">Selectionner une Association Villageoise</div>
+			<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" id="searchTextResults">
+					<thead>
+						<tr>
+							<th>Pays</th>
+							<th>Prefecture</th>
+							<th>Sous prefecture</th>
+							<th>Canton</th>
+							<th>Usine</th>
+							<th>CGI</th>
+						    <th>AV</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "client in clients | filter:searchText">
+							<td>Tchad</td>
+							<td>{{client.canton.sous_prefecture.prefecture.nom_prefecture}}</td>
+							<td>{{client.canton.sous_prefecture.nom_sous_prefecture}}</td>
+							<td>{{client.canton.nom_canton}}</td>
+							<td>{{client.cgi.usine.nom_usine}}</td>
+							<td>{{client.cgi.nom_CGI}}</td>
+							<td>{{client.nom_client}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#add_reglement" ng-click = "selectClient(client)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-tag"></span> Ajouter Bordereau de reglement</button></td>
+						
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	
+	
+	
+	</div>	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="modal fade" id="add_reglement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Ajouter un bordereau de réglement</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<div class = "alert alert-info">Bordereaux de livraison</div>
+			<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText2"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "bordereau_de_livraison in bordereau_de_livraisons | filter:searchText2">
+							<td>{{bordereau_de_livraison.num}}</td>
+							<td>{{bordereau_de_livraison.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture" ng-click = "selectBordereau_de_livraison(bordereau_de_livraison)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher les aricles</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	
+	<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<div class = "alert alert-info">Tickets de pesage </div>
+			<div class = "container-fluid">
+				<p align="right"><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText1"></label></p>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Date</th>
+							<th>Quantité do coton</th>
+							<th>Choix</th>
+							<th>Libelle</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "ticket_de_pesage in ticket_de_pesages | filter:searchText1">
+							<td>{{ticket_de_pesage.code_tichet}}</td>
+							<td>{{ticket_de_pesage.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{ticket_de_pesage.poids}}</td>
+							<td>{{ticket_de_pesage.choix_coton}}</td>
+							<td>{{ticket_de_pesage.libelle}}</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	
+	
+	
+	
+				
+	</div>	
+	<div class="modal-footer">
+	<button  class="btn btn-primary" ng-click = "savePrefecture()" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Enregistrer</button>
+			
+					</div>
+	
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="update_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel"><span class = "glyphicon glyphicon-th-list"></span>  Articles</h4>
+				</div>
+				
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantité</th>
+							<th>Unité de vente</th>
+							<th>Prix unitaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "liqne_bordereau in liqne_bordereaus">
+							<td>{{liqne_bordereau.article.nom}}</td>
+							<td>{{liqne_bordereau.article.discription_technique}}</td>
+							<td>{{liqne_bordereau.qauntite}}</td>
+							<td>{{liqne_bordereau.article.unite_de_vente}}</td>
+							<td>{{liqne_bordereau.article.prix_unitaire}}</td>
+						</tr>
+					</tbody>
+				</table>
+						</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	</div></div>
+		
+		<div class="modal fade" id="add_prefecture9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Mettre à jour Prix du coton</h4>
+				</div>
+				<div class="modal-body">	
+						<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Premier choix</th>
+							<th>Deuxieme choix</th>
+							<th>Troisieme choix</th>
+							<th>Date du dernier mise à jour</th>
+							<th></th>
+							
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "prix_coton in prix_cotons">
+							<td>{{prix_coton.choix1}}</td>
+							<td>{{prix_coton.choix2}}</td>
+							<td>{{prix_coton.choix3}}</td>
+							<td>{{prix_coton.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td><button class="btn btn-warning" data-toggle="modal" data-target="#add_prefecture99" ng-click = "selectPrix(prix_coton)"><span class = "glyphicon glyphicon-upload"></span> Mettre à jour</button>
+				</td>
+							</tr>
+					</tbody>
+				</table>
+						
+				</div>
+				<div class="modal-footer">
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="add_prefecture99" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form  name="form1" ng-submit="submit()" novalidate novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Mettre à jour Prix du coton</h4>
+				</div>
+				<div class="modal-body">	
+						
+						<div class = "form-group">
+							<label>Prix du premier choix</label>
+							<input type = "number" class = "form-control" ng-model = "selectedPrix.choix1" min="0" required  />
+						</div>
+						<div class = "form-group">
+							<label>Prix du deuxieme choix</label>
+							<input type = "number" class = "form-control" ng-model = "selectedPrix.choix2" min="0" required />
+						</div>
+						<div class = "form-group">
+							<label>Prix du troisieme choix</label>
+							<input type = "number" class = "form-control" ng-model = "selectedPrix.choix3" min="0" required />
+						</div>
+						
+				</div>
+				<div class="modal-footer">
+				<button class="btn btn-primary"  data-dismiss = "modal" ng-click = "updatePrix()" ng-disabled="form1.$invalid" ><span class = "glyphicon glyphicon-euro"></span> Terminer</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>

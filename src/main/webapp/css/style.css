@@ -1,0 +1,83 @@
+.ui-tabs.ui-tabs-vertical {
+    padding: 0;
+   /* width: 42em;*/
+    height: 50em;
+}
+.ui-tabs.ui-tabs-vertical .ui-widget-header {
+    border: none;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav {
+    float: left;
+    width: 15em;
+    height: 50em;
+    background: #CCC;
+    border-radius: 4px 0 0 4px;
+    border-right: 1px solid gray;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li {
+    clear: left;
+    width: 100%;
+    margin: 0.2em 0;
+    border: 1px solid gray;
+    border-width: 1px 0 1px 1px;
+    border-radius: 4px 0 0 4px;
+    overflow: hidden;
+    position: relative;
+    right: -2px;
+    z-index: 2;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a {
+    display: block;
+    width: 100%;
+    padding: 0.6em 1em;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li a:hover {
+    cursor: pointer;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    margin-bottom: 0.2em;
+    padding-bottom: 0;
+    border-right: 1px solid white;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-nav li:last-child {
+    margin-bottom: 10px;
+}
+.ui-tabs.ui-tabs-vertical .ui-tabs-panel {
+    float: left;
+    width: 28em;
+    border-left: 1px solid gray;
+    border-radius: 0;
+    position: relative;
+    left: -1px;
+}
+
+.jumbotron-wrap{
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+/*.grid {
+    width: 1000px;
+    height: 400px;
+}*/
+/*
+ * ui-grid Styles: General
+ * -------------------------
+ */
+/*.gridTable {
+    background: white;
+    width: 200%;
+}*/
+
+.grid1492198654726 .ui-grid-render-container-body
+.ui-grid-canvas{
+    width: 986px;
+    height: 605px;
+}
+
+.grid1492200141064 .ui-grid-render-container-body
+.ui-grid-viewport{
+    width: 986px;
+    height: 605px;
+}

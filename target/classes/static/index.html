@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<meta charset  = "UTF-8"  name = "viewport" content = "width=device-width, initial-scale=1"/>
+		<title>Coton Tchad</title>
+		<link rel = "stylesheet" type = "text/css" href = "css/bootstrap.css" />
+		<script src = "js/angular.js"></script>
+		<script src = "js/app.js"></script>
+	</head>
+<body ng-app = "myModule" ng-controller = "myController">
+	
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTSN</a>
+		</div>
+		<div class="navbar-wrapper">
+    <div class="container-fluid" style="height: 50px;">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#" class=""><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                        <li class="active"><a href="#"><span class="glyphicon glyphicon-road"></span>  + bordereau de réglement</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Bordereau de réglement</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li class=" dropdown"><a href="#" class="dropdown-toggle active" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>  <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><span class="glyphicon glyphicon-asterisk"></span> Change Password</a></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-user"></span> My Profile</a></li>
+                            </ul>
+                        </li>
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+	</nav>
+	</div></div></nav>
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<h3 class = "text-primary"><span class="glyphicon glyphicon-cog"></span> Rédiger un bordereau de réglement</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info">Selectionner une Association Villageoise</div>
+			<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" id="searchTextResults">
+					<thead>
+						<tr>
+							<th>Pays</th>
+							<th>Prefecture</th>
+							<th>Sous prefecture</th>
+							<th>Canton</th>
+							<th>Usine</th>
+							<th>CGI</th>
+						    <th>AV</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "client in clients | filter:searchText">
+							<td>Tchad</td>
+							<td>{{client.canton.sous_prefecture.prefecture.nom_prefecture}}</td>
+							<td>{{client.canton.sous_prefecture.nom_sous_prefecture}}</td>
+							<td>{{client.canton.nom_canton}}</td>
+							<td>{{client.cgi.usine.nom_usine}}</td>
+							<td>{{client.cgi.nom_CGI}}</td>
+							<td>{{client.nom_client}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#add_reglement" ng-click = "selectClient(client)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-tag"></span> Ajouter Bordereau de reglement</button></td>
+						
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	
+	
+	
+	</div>	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="modal fade" id="add_reglement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Ajouter un bordereau de réglement</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<div class = "alert alert-info">Bordereaux de livraison</div>
+			<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>Date</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText2"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "bordereau_de_livraison in bordereau_de_livraisons | filter:searchText2">
+							<td>{{bordereau_de_livraison.num}}</td>
+							<td>{{bordereau_de_livraison.date}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture" ng-click = "selectBordereau_de_livraison(bordereau_de_livraison)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher les aricles</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	
+	<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<div class = "alert alert-info">Tickets de pesage </div>
+			<div class = "container-fluid">
+				<p align="right"><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText1"></label></p>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Code</th>
+							<th>Date</th>
+							<th>Quantité do coton</th>
+							<th>Choix</th>
+							<th>Libelle</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "ticket_de_pesage in ticket_de_pesages | filter:searchText1">
+							<td>{{ticket_de_pesage.code_tichet}}</td>
+							<td>{{ticket_de_pesage.date}}</td>
+							<td>{{ticket_de_pesage.poids}}</td>
+							<td>{{ticket_de_pesage.choix_coton}}</td>
+							<td>{{ticket_de_pesage.libelle}}</td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	
+	
+	
+	
+				
+	</div>	
+	<div class="modal-footer">
+	<button  class="btn btn-primary" ng-click = "savePrefecture()" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Enregistrer</button>
+			
+					</div>
+	
+				</div>
+				
+				</form>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="update_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel"><span class = "glyphicon glyphicon-th-list"></span>  Articles</h4>
+				</div>
+				
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantité</th>
+							<th>Unité de vente</th>
+							<th>Prix unitaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "liqne_bordereau in liqne_bordereaus">
+							<td>{{liqne_bordereau.article.nom}}</td>
+							<td>{{liqne_bordereau.article.discription_technique}}</td>
+							<td>{{liqne_bordereau.qauntite}}</td>
+							<td>{{liqne_bordereau.article.unite_de_vente}}</td>
+							<td>{{liqne_bordereau.article.prix_unitaire}}</td>
+						</tr>
+					</tbody>
+				</table>
+						</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	</div>
+		
+</body>
+<script src  = "js/jquery-3.1.1.js"></script>	
+<script src  = "js/bootstrap.js"></script>	
+</html>

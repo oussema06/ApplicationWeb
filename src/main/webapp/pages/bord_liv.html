@@ -1,0 +1,302 @@
+
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTD-SN</a>
+		</div>
+		<div class="navbar-wrapper">
+   <div class="container-fluid" style="
+    height: 50px;
+">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#homeResponsableCGI" class=""><span class="glyphicon glyphicon-home"></span> Acceuil</a></li>
+                        <li class="active"><a><span class="glyphicon glyphicon-road"></span>  Bordereau de livraison</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+	</nav>
+	<form  name="form1" ng-submit="submit()" novalidate novalidate>
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<h3 class = "text-primary"><span class="glyphicon glyphicon-road"></span>  Bordereau de livraison
+			<button class = "btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#add_prefecture22"><span class = "glyphicon glyphicon-plus"></span> Liste des Bordereaux de livraison</button>
+			</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info"><span class="glyphicon glyphicon-tag"></span>  Selectionner une Association Villageoise</div>
+			<div class = "container-fluid">
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Association Villageoise</label>
+							<select class = "form-control" ng-model = "newBordereau_de_livraison.client.code_client" required>
+								<option value = "">Choix AV</option>
+								<option ng-repeat= "client in clients" value = "{{client.code_client}}">{{client.nom_client}}</option>
+							</select>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	
+	<div class = "row">
+		<div class = "col-md-2"></div>
+		<div class = "col-md-8 well">
+			<div class = "alert alert-info"><span class="glyphicon glyphicon-check"></span>  Cocher les articles a livrer   </div>
+			<div class = "container-fluid">
+				<h4 align="right"> <label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText"></label></h4>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+						    <th></th>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantite</th>
+							<th>Quantite unitaire</th>
+							<th>Prix unitaire</th>
+							<th>Quantite disponible</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat= "article in articles | filter:searchText">
+						    <td>{{article.code_article}}<input name="aa" type="checkbox" ng-model="ligne_bordereaus[$index].article.code_article" ng-true-value="{{article.code_article}}" ng-false-value="{{undefined}}"/></td>
+							<td>{{article.nom}}</td>
+							<td>{{article.discription_technique}}</td>
+							<td><input type  = "number" class = "form-control"  ng-readonly="!ligne_bordereaus[$index].article.code_article" ng-model = "ligne_bordereaus[$index].qauntite" max="{{article.quantite_disponible}}"/></td>
+							<td>{{article.unite_de_vente}}</td>
+							<td>{{article.prix_unitaire}}</td>
+							<td>{{article.quantite_disponible}}</td>
+						</tr>
+						
+						<tr>
+						
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><button  class="btn btn-primary" ng-click = "saveBordereau_de_livraison()" ng-disabled="form1.$invalid" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Enregistrer</button></td>
+					    </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div></form>
+	
+	<div class="modal fade" id="add_prefecture22" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog col-sm-offset-0" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Liste des bordereaux de livraison</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "row">
+						
+		<div class = "col-md-1"></div>
+		
+
+			
+	     	<div class = "container-fluid">
+				
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Num</th>
+							<th>AV</th>
+							<th>Date</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText2"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "bordereau_de_livraison in bordereau_de_livraisons | filter:searchText2">
+							<td>{{bordereau_de_livraison.num}}</td>
+							<td>{{bordereau_de_livraison.client.nom_client}}</td>
+							<td>{{bordereau_de_livraison.date|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture" ng-click = "selectBordereau_de_livraison(bordereau_de_livraison)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-th-list"></span> Afficher les aricles</button>|<button type = "button" data-toggle = "modal" data-target = "#update_prefecture11" ng-click = "selectBordereau_de_livraison(bordereau_de_livraison)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-edit"></span> Modifier</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			</div>	</div>	
+				
+				</form>
+			</div>
+		</div>
+	
+	
+	
+	<div class="modal fade" id="update_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel"><span class = "glyphicon glyphicon-th-list"></span>  Articles</h4>
+				</div>
+				
+				
+				<div class="modal-body">	
+						<div class = "form-group">
+							
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantité</th>
+							<th>Unité de vente</th>
+							<th>Prix unitaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "liqne_bordereau in liqne_bordereau1s">
+							<td>{{liqne_bordereau.article.nom}}</td>
+							<td>{{liqne_bordereau.article.discription_technique}}</td>
+							<td>{{liqne_bordereau.qauntite}}</td>
+							<td>{{liqne_bordereau.article.unite_de_vente}}</td>
+							<td>{{liqne_bordereau.article.prix_unitaire}}</td>
+						</tr>
+					</tbody>
+				</table>
+						</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</div>	
+	
+	<div class="modal fade" id="update_prefecture11" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Modifier Bordereau de livraison</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Num</label>
+							<input type  = "text" class = "form-control" ng-model = "selectedBordereau_de_livraison.num" disabled/>
+						</div>
+						<div class = "form-group">
+							<label>Date</label>
+							<input type = "datetime" class = "form-control" ng-model = "selectedBordereau_de_livraison.date" disabled/>
+						</div>
+						<div class = "form-group">
+							
+							<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantite</th>
+							<th>Unite de vente</th>
+							<th>Prix unitaire</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "liqne_bordereau in liqne_bordereau1s">
+							<td>{{liqne_bordereau.article.nom}}</td>
+							<td>{{liqne_bordereau.article.discription_technique}}</td>
+							<td>{{liqne_bordereau.qauntite}}</td>
+							<td>{{liqne_bordereau.article.unite_de_vente}}</td>
+							<td>{{liqne_bordereau.article.prix_unitaire}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefectur" ng-click = "selectLiqne_bordereau(liqne_bordereau)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-edit"></span> Modifier</button></td>
+						</tr>
+					</tbody>
+				</table>
+					
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button  class="btn btn-success"  data-toggle = "modal" data-target = "#delete_prefecture"><span class = "glyphicon glyphicon-edit"></span> Ajouter autres articles</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="update_prefectur" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form  name="form" ng-submit="submit()" novalidate novalidate>
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Nouvelle quantite</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Quantite</label>
+							<input type  = "number" class = "form-control" ng-model = "selectedLiqne_bordereau.qauntite" required />
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button  class="btn btn-success"  data-dismiss = "modal" ng-click = "updateLiqne_bordereau()" ng-disabled="form.$invalid" ><span class = "glyphicon glyphicon-edit"></span> Mettre Ã  jour</button> | <button class = "btn btn-danger btn-danger"  data-dismiss = "modal" ng-click = "updateLiqne_bordereau1()"><span class = "glyphicon glyphicon-trash"></span> Supprimer</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="delete_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form>
+				<div class="modal-body">	
+						<center><h4 class = "text-danger">Cocher les articles a ajouter</h4></center>
+				</div>
+				<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-10 well">
+			<div class = "container-fluid">
+				<h4 align="right"> <label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText"></label></h4>
+				<table class = "table table-bordered alert-warning" >
+					<thead>
+						<tr>
+						    <th></th>
+							<th>Articles</th>
+							<th>Discription technique </th>
+							<th>Quantite</th>
+							<th>Unite de vente</th>
+							<th>Prix unitaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat= "article in articles | filter:searchText">
+						    <td>{{article.code_article}}<input type="checkbox" ng-model="ligne_bordereaus[$index].article.code_article" ng-true-value="{{article.code_article}}" ng-false-value="{{undefined}}"/></td>
+							<td>{{article.nom}}</td>
+							<td>{{article.discription_technique}}</td>
+							<td><input type  = "number" class = "form-control" ng-model = "ligne_bordereaus[$index].qauntite"/></td>
+							<td>{{article.unite_de_vente}}</td>
+							<td>{{article.prix_unitaire}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+				<div class="modal-footer">
+				<button  class="btn btn-primary" ng-click = "saveBordereau_de_livraison1()" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Terminer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,218 @@
+
+	<nav class = "navbar navbar-default">
+		<div class = "containet-fluid">
+			<a class = "navbar-brand" >CTD-SN</a>
+		</div>
+		<div class="navbar-wrapper">
+    <div class="container-fluid" style="height: 50px;">
+        <nav class="navbar navbar">
+            <div class="container">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#homeAdmin" class=""><span class="glyphicon glyphicon-home"></span> Acceuil</a></li>
+                        <li class=" dropdown">
+                            <a class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-wrench"></span>  Parametrage de base <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class=" dropdown">
+                                    <a href="#prefecture" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Prefecture</a>
+                                </li>
+								<li><a href="#sous_prefecture">Sous prefeccture</a></li>
+								<li><a href="canton">Canton</a></li>
+                                <li class="active"><a>Client</a></li>
+								<li><a href="#article">Article</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#utilisateur"><span class="glyphicon glyphicon-user"></span>  Utilisateurs</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                       
+                        <li class=""><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+	</nav>
+	<div class = "row">
+		<div class = "col-md-1"></div>
+		<div class = "col-md-12 well">
+			<h3 class = "text-primary">Gestion des AV</h3>
+			<hr style = "border-top:1px dotted #000;"/>
+			<div class = "alert alert-info">Liste des AV <button class = "btn btn-sm btn-primary pull-right" data-toggle="modal" data-target="#add_prefecture"><span class = "glyphicon glyphicon-plus"></span></button></div>
+			<div class = "container-fluid">
+				<br />
+				<br />
+				<table class = "table table-bordered alert-warning" id="searchTextResults">
+					<thead>
+						<tr>
+							<th>Code</th>
+						    <th>Type</th>
+							<th>Nom</th>
+							<th>Representant</th>
+							<th>Adresse de facturation</th>
+							<th>Adresse de livraison</th>
+							<th>Tel</th>
+							<th>Fax</th>
+							<th>Mail</th>
+							<th>libelle</th>
+							<th>CGI</th>
+							<th>Canton</th>
+							<th><label><span class="glyphicon glyphicon-search"></span>  Rechercher: <input ng-model="searchText"></label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat = "client in clients | filter:searchText">
+							<td>{{client.code_client}}</td>
+							<td>{{client.type}}</td>
+							<td>{{client.nom_client}}</td>
+							<td>{{client.representant}}</td>
+							<!-- <td>{{client.activité}}</td> -->
+							<td>{{client.adresse_de_facturation}}</td>
+							<td>{{client.adresse_de_livraison}}</td>
+							<td>{{client.tel}}</td>
+							<td>{{client.fax}}</td>
+							<td>{{client.mail}}</td>
+							<td>{{client.libelle}}</td>
+							<td>{{client.cgi.nom_CGI}}</td>
+							<td>{{client.canton.nom_canton}}</td>
+							<td><button type = "button" data-toggle = "modal" data-target = "#update_prefecture" ng-click = "selectClient(client)" class = "btn btn-sm btn-warning"><span class = "glyphicon glyphicon-edit"></span> Mettre à jour</button>  </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>	
+	<div class="modal fade" id="add_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form  name="form" ng-submit="submit()" novalidate novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Ajouter une AV</h4>
+				</div>
+				<div class="modal-body">	
+						<div class = "form-group">
+							<label>Type du client</label>
+							<select class = "form-control" ng-model = "newClient.type" required >
+								<option value = "">Choisir un type</option>
+								<option value = "AV">Association Villageoise</option>
+								<option value = "transporteur">Transporteur</option>
+
+							</select>
+						</div>
+						<div class = "form-group">
+							<label>Nom</label>
+							<input type  = "text" class = "form-control" ng-model = "newClient.nom_client" required/>
+						</div>
+						<div class = "form-group">
+							<label>Representant</label>
+							<input type = "text" class = "form-control" ng-model = "newClient.representant"/>
+						</div>
+						<div class = "form-group">
+							<label>Adresse de facturetion</label>
+							<input type = "text" class = "form-control" ng-model = "newClient.adresse_de_facturation"/>
+						</div>
+						<div class = "form-group">
+							<label>Adresse de livraison</label>
+							<input type = "text" class = "form-control" ng-model = "newClient.adresse_de_livraison"/>
+						</div>
+						<div class = "form-group">
+							<label>Tel</label>
+							<input type = "number" class = "form-control" ng-model = "newClient.tel" min="0"/>
+						</div>
+						<div class = "form-group">
+							<label>Fax</label>
+							<input type = "number" class = "form-control" ng-model = "newClient.fax" min="0"/>
+						</div>
+						<div class = "form-group">
+							<label>Mail</label>
+							<input type ="email" class = "form-control" ng-model = "newClient.mail"/>
+						</div>
+						<div class = "form-group">
+							<label>Libelle</label>
+							<input type = "text" class = "form-control" ng-model = "newClient.libelle"/>
+						</div>
+						<div class = "form-group">
+							<label>CGI</label>
+							<select class = "form-control" ng-model = "newClient.cgi.code_CGI" required>
+							   <option value = "">Choix CGI</option>
+								<option ng-repeat= "CGI in CGIs" value = "{{CGI.code_CGI}}">{{CGI.nom_CGI}}</option>
+							</select>
+						</div>
+						<div class = "form-group">
+							<label>Canton</label>
+							<select class = "form-control" ng-model = "newClient.canton.code_canton" required>
+							   <option value = "">Choix canton</option>
+								<option ng-repeat= "canton in cantons" value = "{{canton.code_canton}}">{{canton.nom_canton}}</option>
+							</select>
+						</div>
+				</div>
+				<div class="modal-footer">
+					<button  class="btn btn-primary" ng-click = "saveClient()" ng-disabled="form.$invalid" data-dismiss = "modal"><span class = "glyphicon glyphicon-save"></span> Enregistrer</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="update_prefecture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<form  name="form1" ng-submit="submit()" novalidate novalidate>
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title text-info" id="myModalLabel">Mettre a jour</h4>
+				</div>
+				
+					
+						<div class = "form-group">
+							<label>Nom</label>
+							<input type  = "text" class = "form-control" ng-model = "selectedClient.nom_client" required/>
+						</div>
+						
+						<div class = "form-group">
+							<label>Adresse de facturetion</label>
+							<input type = "text" class = "form-control" ng-model = "selectedClient.adresse_de_facturation"/>
+						</div>
+						<div class = "form-group">
+							<label>Adresse de livraison</label>
+							<input type = "text" class = "form-control" ng-model = "selectedClient.adresse_de_livraison"/>
+						</div>
+						<div class = "form-group">
+							<label>Tel</label>
+							<input type = "number" class = "form-control" ng-model = "selectedClient.tel" min="0"/>
+						</div>
+						<div class = "form-group">
+							<label>Fax</label>
+							<input type = "number" class = "form-control" ng-model = "selectedClient.fax" min="0"/>
+						</div>
+						<div class = "form-group">
+							<label>Mail</label>
+							<input type ="email" class = "form-control" ng-model = "selectedClient.mail"/>
+						</div>
+						<div class = "form-group">
+							<label>Libelle</label>
+							<input type = "text" class = "form-control" ng-model = "selectedClient.libelle"/>
+						</div>
+						<div class = "form-group">
+							<label>CGI</label>
+							<select class = "form-control" ng-model = "selectedClient.cgi.code_CGI" required>
+							   <option value = "">Choix CGI</option>
+								<option ng-repeat= "CGI in CGIs" value = "{{CGI.code_CGI}}">{{CGI.nom_CGI}}</option>
+							</select>
+						</div>
+						<div class = "form-group">
+							<label>Canton</label>
+							<select class = "form-control" ng-model = "newClient.canton.code_canton" required>
+							   <option value = "">Choix canton</option>
+								<option ng-repeat= "canton in cantons" value = "{{canton.code_canton}}">{{canton.nom_canton}}</option>
+							</select>
+						</div>
+				
+				<div class="modal-footer">
+					<button  class="btn btn-success"  data-dismiss = "modal" ng-click = "updateCanton()" ng-disabled="form1.$invalid" ><span class = "glyphicon glyphicon-edit"></span> Mettre à jour</button>
+				</div></form>
+				
+			</div></div></div>
+	
+	
